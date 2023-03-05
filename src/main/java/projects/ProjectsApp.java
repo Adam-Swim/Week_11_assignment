@@ -135,7 +135,7 @@ String input = getStringInput(prompt);
 	}
 	private void printOperations() {
 		System.out.println();
-		System.out.println("\n These are the available selections. Press enter to exit:");
+		System.out.println("\n These are the available selections. Please press enter to exit:");
 		
 		operations.forEach(line -> System.out.println("   " + line));
 		
