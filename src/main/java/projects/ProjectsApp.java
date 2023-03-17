@@ -24,7 +24,9 @@ public class ProjectsApp {
 	  private List<String> operations = List.of(
 			  "1) Add a project",
 			  "2) List projects",
-			  "3) Select a project"
+			  "3) Select a project",
+			  "4) Update project details",
+			  "5) Delete a project"
 			  
 		);
 	  //formatter:on
@@ -57,6 +59,14 @@ public class ProjectsApp {
 					selectProject();
 					break;
 					
+				case 4:
+					updateProjectDetails();
+					break;
+					
+				case 5:
+					deleteProject();
+					break;
+					
 					
 				default:
 					System.out.println("\n\t" + selection + " is not a valid selection, please try again.");
@@ -69,6 +79,36 @@ public class ProjectsApp {
 				System.out.println("\nError: " + e + " Please try again.");
 			}
 		}
+		
+	}
+	private void deleteProject() {
+		listProjects();
+		
+		Integer projectId = getIntInput("Enter the ID of the project to delete");
+		
+		projectService.deleteProject(projectId);
+		System.out.println("Project " + projectId + " was deleted successfully.");
+		
+		if(Objects.nonNull(curProject) && curProject.getProjectId().equals(projectId)) {
+			curProject = null;
+		}
+		
+	}
+	private void updateProjectDetails() {
+		if(Objects.isNull(curProject)) {
+			System.out.println("Please select a project.");
+			return;
+		}
+		String projectName = getStringInput("Enter the project name [" + curProject.getProjectName() + "]");
+		
+		Project project = new Project();
+		
+		project.setProjectId(curProject.getProjectId());
+		project.setProjectName(Objects.isNull(projectName) ? curProject.getProjectName() : projectName);
+		
+		projectService.modifyProjectDetails(project);
+		
+		curProject = projectService.fetchProjectById(curProject.getProjectId());
 		
 	}
 	private void selectProject() {
