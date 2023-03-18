@@ -97,14 +97,32 @@ public class ProjectsApp {
 	private void updateProjectDetails() {
 		if(Objects.isNull(curProject)) {
 			System.out.println("Please select a project.");
+			
 			return;
+				
 		}
+		
 		String projectName = getStringInput("Enter the project name [" + curProject.getProjectName() + "]");
+		
+		BigDecimal estimatedHours = getDecimalInput("Enter the project name [" + curProject.getEstimatedHours() + "]");
+		
+		BigDecimal actualHours = getDecimalInput("Enter the actual hours [" + curProject.getActualHours() + "]");
+		
+		Integer difficulty = getIntInput("Enter the project difficulty (1-5) [" + curProject.getDifficulty() + "]");
+		
+		String notes = getStringInput("Enter the project notes [" + curProject.getNotes() + "]");
 		
 		Project project = new Project();
 		
 		project.setProjectId(curProject.getProjectId());
 		project.setProjectName(Objects.isNull(projectName) ? curProject.getProjectName() : projectName);
+		
+		project.setEstimatedHours(Objects.isNull(estimatedHours) ? curProject.getEstimatedHours() : estimatedHours);
+		
+		project.setActualHours(Objects.isNull(actualHours) ? curProject.getActualHours() : actualHours);
+		project.setDifficulty(Objects.isNull(difficulty) ? curProject.getDifficulty() : difficulty);
+		project.setNotes(Objects.isNull(notes) ? curProject.getNotes() : notes);
+		
 		
 		projectService.modifyProjectDetails(project);
 		
